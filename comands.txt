@@ -1,0 +1,92 @@
+SELECT sum(
+	case
+		when salary > 10000 then salary else 0
+    end
+) as "Salary Sum" from employees;
+
+
+
+select sum(
+	case
+		when salary > 10000 then salary * 0.07 else salary * 0.05
+    end
+) as "Taxes" from employees;
+
+
+select department_id, max(
+	case
+		when salary >= 10000 then 1 else 0
+    end
+) as "is_anyone_more_10k" from employees group by department_id order by department_id;
+
+
+
+select first_name, last_name, salary, (
+	case
+		when salary >= 10000 then 1 else 0
+    end
+) as "More than 10k" from employees;
+
+
+select first_name, last_name, salary, (
+	case
+		when salary < 5000 then 0
+                when salary > 5000  and salary <= 10000 then 1
+                when salary > 10000 then 2
+    end
+) as "grade" from employees;
+
+
+
+вывести список из 2 колонок: department_id и число сотрудников в этом департаменте
+
+grade = 0, если salary < 5000, = 1, если salary от 5000 до 10000 включительно и = 2, если salary > 10000
+
+
+
+select (
+	case
+		when salary > 10000 then 2
+		when salary >= 5000 and salary <= 10000 then 1
+		when salary < 5000 then 0
+    end
+) as "grade", count(employee_id) as "Count" from employees group by grade;
+
+
+выбрать все first_name, last_name, salary где выполняется такое условие: показывать только сотрудников с зп >= 4000 НО если job_id = IT_PROG, то с зп >= 6000
+
+
+select first_name, last_name, salary, (
+	case
+		when job_id = "IT_PROG" then 6000 else 4000
+    end
+) as "min_salary" from employees where salary >= min_salary;
+
+
+
+
+
+select first_name, last_name, salary from employees where salary >= (
+	case
+        when job_id = "ST_MAN"  then 7000
+		when job_id = "IT_PROG" then 6000 else 4000
+    end
+);
+select job_id, department_id, min(salary), max(salary) from employees group by job_id, department_id;
+
+
+select first_name, last_name, salary from employees where salary >= (
+	case
+        when job_id = "ST_MAN"  then 7000
+		when job_id = "IT_PROG" then 6000 else 4000
+    end
+);
+select job_id, department_id, min(salary), max(salary) from employees group by job_id, department_id;
+
+-- все сотрудники жертвуют 10% от зп в фонд защиты дикой природы. Посчитать сумму всех пожертвований.
+-- все сотрудники жертвуют 10% от зп в фонд защиты дикой природы. Посчитать сумму всех пожертвований для каждого департамента.
+-- все сотрудники, зарабатывающие больше 10 000, жертвуют 10% от зп в фонд защиты дикой природы. Посчитать сумму всех пожертвований.
+-- прилетел дракон и оштрафовал всех сотрудников на 10 000 из их зарплаты. Сотрудник не может получать отрицательное число денег, поэтому если зп сотрудника < 10000, то он штрафуется на величину своей зп. Посчитать сумму всех штрафов.
+
+
+

@@ -1,0 +1,1 @@
+Через Workbenck Installer зайди и именно SQL Server зайди в Reconfigurate и установи заново именно SQL server
